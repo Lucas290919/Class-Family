@@ -55,10 +55,6 @@ namespace Class_Family.SQLite
             return _db.DeleteAsync(entity);
         }
 
-        // ========================
-        // MÉTODOS ESPECÍFICOS
-        // ========================
-
         // Login de usuário
         public Task<Usuario> Login(string email, string senha)
         {
