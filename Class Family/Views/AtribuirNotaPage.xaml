@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Class_Family.Views.AtribuirNotaPage"
+             Title="Atribuir Nota">
+    <VerticalStackLayout Padding="20" Spacing="15">
+        <Label Text="Lançamento de Notas" FontSize="20" FontAttributes="Bold" />
+
+        <Picker x:Name="alunoPicker" Title="Selecione o Aluno" />
+        <Picker x:Name="disciplinaPicker" Title="Selecione a Disciplina" />
+
+        <Entry x:Name="notaEntry" Placeholder="Nota (Ex: 7.5)" Keyboard="Numeric" />
+        <Entry x:Name="observacaoEntry" Placeholder="Observação (Opcional)" />
+
+        <Button Text="Lançar Nota" Clicked="OnLancarNotaClicked" />
+    </VerticalStackLayout>
+</ContentPage>

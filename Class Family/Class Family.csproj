@@ -73,6 +73,9 @@
 	  <MauiXaml Update="Views\AgendaPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AtribuirNotaPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\BoletimPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

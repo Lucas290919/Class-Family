@@ -5,6 +5,9 @@
              Title="BoletimPage">
     <VerticalStackLayout Padding="20" Spacing="10">
         <Label Text="Notas lançadas" FontSize="18" FontAttributes="Bold" />
+
+        <Button x:Name="AtribuirNotaButton" Text="Atribuir Nota" Clicked="OnAtribuirNotaClicked" IsVisible="False"/>
+
         <CollectionView x:Name="boletimList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>

@@ -1,5 +1,6 @@
 using Class_Family.Models;
 using Class_Family.Helpers;
+
 namespace Class_Family.Views
 {
     public partial class HomePage : ContentPage
@@ -14,12 +15,6 @@ namespace Class_Family.Views
             _usuario = usuario;
 
             welcomeLabel.Text = $"Bem-vindo, {_usuario.Nome} ({_usuario.Tipo})";
-
-            if (_usuario.Tipo == "Aluno" || _usuario.Tipo == "Responsável")
-            {
-                ComunicadosButton.IsVisible = false;
-                AgendaButton.IsVisible = false;
-            }
         }
 
         private async void OnComunicadosClicked(object sender, EventArgs e)
