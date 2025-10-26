@@ -1,20 +1,26 @@
 using Class_Family.Models;
 using Class_Family.Helpers;
-namespace Class_Family.Views;
+using System.Linq;
 
-public partial class BoletimPage : ContentPage
+namespace Class_Family.Views
 {
-    private readonly DatabaseService _db;
-
-    public BoletimPage(DatabaseService db)
+    public partial class BoletimPage : ContentPage
     {
-        InitializeComponent();
-        _db = db;
-        CarregarBoletim();
-    }
+        private readonly DatabaseService _db;
+        private readonly Usuario _usuario;
 
-    private async void CarregarBoletim()
-    {
-        boletimList.ItemsSource = await _db.ListarBoletins();
+        public BoletimPage(DatabaseService db, Usuario usuario)
+        {
+            InitializeComponent();
+            _db = db;
+            _usuario = usuario;
+            CarregarBoletim();
+        }
+
+        private async void CarregarBoletim()
+        {
+            // O ideal é filtrar por AlunoId aqui, mas mantido o ListarBoletins() original por enquanto.
+            boletimList.ItemsSource = await _db.ListarBoletins();
+        }
     }
 }

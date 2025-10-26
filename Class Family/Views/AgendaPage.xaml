@@ -4,10 +4,12 @@
              x:Class="Class_Family.Views.AgendaPage"
              Title="Agendapage">
     <VerticalStackLayout Padding="20" Spacing="10">
-        <Entry x:Name="eventoEntry" Placeholder="Título do evento" />
-        <Entry x:Name="descricaoEntry" Placeholder="Descrição" />
-        <DatePicker x:Name="dataPicker" />
-        <Button Text="Adicionar Evento" Clicked="OnAdicionarClicked" />
+        <StackLayout x:Name="AgendaControls">
+            <Entry x:Name="eventoEntry" Placeholder="Título do evento" />
+            <Entry x:Name="descricaoEntry" Placeholder="Descrição" />
+            <DatePicker x:Name="dataPicker" />
+            <Button x:Name="AdicionarEventoButton" Text="Adicionar Evento" Clicked="OnAdicionarClicked" />
+        </StackLayout>
 
         <CollectionView x:Name="agendaList">
             <CollectionView.ItemTemplate>

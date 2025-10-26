@@ -4,9 +4,11 @@
              x:Class="Class_Family.Views.ComunicadosPage"
              Title="ComunicadosPage">
     <VerticalStackLayout Padding="20" Spacing="10">
-        <Entry x:Name="tituloEntry" Placeholder="Título" />
-        <Editor x:Name="mensagemEditor" Placeholder="Mensagem..." />
-        <Button Text="Enviar" Clicked="OnEnviarClicked" />
+        <StackLayout x:Name="ComunicationControls">
+            <Entry x:Name="tituloEntry" Placeholder="Título" />
+            <Editor x:Name="mensagemEditor" Placeholder="Mensagem..." />
+            <Button x:Name="EnviarButton" Text="Enviar" Clicked="OnEnviarClicked" />
+        </StackLayout>
 
         <CollectionView x:Name="comunicadosList">
             <CollectionView.ItemTemplate>

@@ -4,11 +4,14 @@
              x:Class="Class_Family.Views.HomePage"
              Title="HomePage">
     <VerticalStackLayout Padding="20" Spacing="15">
-        <Label x:Name="welcomeLabel" FontSize="22" HorizontalOptions="Center" />
+        <Label x:Name="welcomeLabel" 
+               Text="Carregando..." 
+               FontSize="22" 
+               HorizontalOptions="Center" />
 
-        <Button Text="Comunicados" Clicked="OnComunicadosClicked" />
-        <Button Text="Boletim" Clicked="OnBoletimClicked" />
-        <Button Text="Agenda Escolar" Clicked="OnAgendaClicked" />
+        <Button x:Name="ComunicadosButton" Text="Comunicados" Clicked="OnComunicadosClicked" />
+        <Button x:Name="BoletimButton" Text="Boletim" Clicked="OnBoletimClicked" />
+        <Button x:Name="AgendaButton" Text="Agenda Escolar" Clicked="OnAgendaClicked" />
         <Button Text="Sair" Clicked="OnSairClicked" />
     </VerticalStackLayout>
 </ContentPage>

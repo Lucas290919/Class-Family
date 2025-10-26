@@ -1,33 +1,49 @@
 using Class_Family.Models;
 using Class_Family.Helpers;
-namespace Class_Family.Views;
-public partial class AgendaPage : ContentPage
+using System;
+
+namespace Class_Family.Views
 {
-    private readonly DatabaseService _db;
-
-    public AgendaPage(DatabaseService db)
+    public partial class AgendaPage : ContentPage
     {
-        InitializeComponent();
-        _db = db;
-        CarregarEventos();
-    }
+        private readonly DatabaseService _db;
+        private readonly Usuario _usuario;
 
-    private async void OnAdicionarClicked(object sender, EventArgs e)
-    {
-        var novoEvento = new Agenda
+        public AgendaPage(DatabaseService db, Usuario usuario)
         {
-            Evento = eventoEntry.Text,
-            Descricao = descricaoEntry.Text,
-            Data = dataPicker.Date
-        };
+            InitializeComponent();
+            _db = db;
+            _usuario = usuario;
 
-        await _db.SalvarAgenda(novoEvento);
-        await DisplayAlert("Sucesso", "Evento adicionado!", "OK");
-        CarregarEventos();
-    }
+            if (_usuario.Tipo == "Aluno" || _usuario.Tipo == "Responsável")
+            {
+                AgendaControls.IsVisible = false;
+            }
 
-    private async void CarregarEventos()
-    {
-        agendaList.ItemsSource = await _db.ListarEventos();
+            CarregarEventos();
+        }
+
+        private async void OnAdicionarClicked(object sender, EventArgs e)
+        {
+            var novoEvento = new Agenda
+            {
+                Evento = eventoEntry.Text,
+                Descricao = descricaoEntry.Text,
+                Data = dataPicker.Date
+            };
+
+            await _db.SalvarAgenda(novoEvento);
+            await DisplayAlert("Sucesso", "Evento adicionado!", "OK");
+
+            eventoEntry.Text = string.Empty;
+            descricaoEntry.Text = string.Empty;
+
+            CarregarEventos();
+        }
+
+        private async void CarregarEventos()
+        {
+            agendaList.ItemsSource = await _db.ListarEventos();
+        }
     }
 }

@@ -1,35 +1,50 @@
 using Class_Family.Models;
 using Class_Family.Helpers;
-namespace Class_Family.Views;
+using System;
 
-public partial class ComunicadosPage : ContentPage
+namespace Class_Family.Views
 {
-    private readonly DatabaseService _db;
-
-    public ComunicadosPage(DatabaseService db)
+    public partial class ComunicadosPage : ContentPage
     {
-        InitializeComponent();
-        _db = db;
-        CarregarComunicados();
-    }
+        private readonly DatabaseService _db;
+        private readonly Usuario _usuario;
 
-    private async void OnEnviarClicked(object sender, EventArgs e)
-    {
-        var novo = new Comunicado
+        public ComunicadosPage(DatabaseService db, Usuario usuario)
         {
-            Titulo = tituloEntry.Text,
-            Mensagem = mensagemEditor.Text,
-            DataEnvio = DateTime.Now,
-            Remetente = "Professor"
-        };
+            InitializeComponent();
+            _db = db;
+            _usuario = usuario;
 
-        await _db.SalvarComunicado(novo);
-        await DisplayAlert("Sucesso", "Comunicado enviado!", "OK");
-        CarregarComunicados();
-    }
+            if (_usuario.Tipo == "Aluno" || _usuario.Tipo == "Responsável")
+            {
+                ComunicationControls.IsVisible = false;
+            }
 
-    private async void CarregarComunicados()
-    {
-        comunicadosList.ItemsSource = await _db.ListarComunicados();
+            CarregarComunicados();
+        }
+
+        private async void OnEnviarClicked(object sender, EventArgs e)
+        {
+            var novo = new Comunicado
+            {
+                Titulo = tituloEntry.Text,
+                Mensagem = mensagemEditor.Text,
+                DataEnvio = DateTime.Now,
+                Remetente = _usuario.Nome
+            };
+
+            await _db.SalvarComunicado(novo);
+            await DisplayAlert("Sucesso", "Comunicado enviado!", "OK");
+
+            tituloEntry.Text = string.Empty;
+            mensagemEditor.Text = string.Empty;
+
+            CarregarComunicados();
+        }
+
+        private async void CarregarComunicados()
+        {
+            comunicadosList.ItemsSource = await _db.ListarComunicados();
+        }
     }
 }

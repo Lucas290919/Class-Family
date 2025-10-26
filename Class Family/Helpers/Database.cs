@@ -1,5 +1,7 @@
 ﻿using SQLite;
 using Class_Family.Models;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Class_Family.Helpers
 {
@@ -10,16 +12,20 @@ namespace Class_Family.Helpers
         public DatabaseService(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
+            Task.Run(() => InitializeAllTablesAsync()).Wait();
+        }
 
-            _database.CreateTableAsync<Usuario>().Wait();
-            _database.CreateTableAsync<Aluno>().Wait();
-            _database.CreateTableAsync<Professor>().Wait();
-            _database.CreateTableAsync<Responsavel>().Wait();
-            _database.CreateTableAsync<Disciplina>().Wait();
-            _database.CreateTableAsync<Boletim>().Wait();
-            _database.CreateTableAsync<Comunicado>().Wait();
-            _database.CreateTableAsync<Agenda>().Wait();
-            _database.CreateTableAsync<Frequencia>().Wait();
+        private async Task InitializeAllTablesAsync()
+        {
+            await _database.CreateTableAsync<Usuario>();
+            await _database.CreateTableAsync<Aluno>();
+            await _database.CreateTableAsync<Professor>();
+            await _database.CreateTableAsync<Responsavel>();
+            await _database.CreateTableAsync<Disciplina>();
+            await _database.CreateTableAsync<Boletim>();
+            await _database.CreateTableAsync<Comunicado>();
+            await _database.CreateTableAsync<Agenda>();
+            await _database.CreateTableAsync<Frequencia>();
         }
 
         public async Task SalvarUsuario(Usuario usuario)
@@ -87,6 +93,7 @@ namespace Class_Family.Helpers
 
         public Task<int> DeletarEvento(Agenda agenda)
             => _database.DeleteAsync(agenda);
+
         public Task<List<Boletim>> ListarBoletins()
         {
             return _database.Table<Boletim>().ToListAsync();

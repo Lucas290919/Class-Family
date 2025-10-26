@@ -18,7 +18,8 @@ public partial class Page_Login : ContentPage
         if (usuario != null)
         {
             await DisplayAlert("Sucesso", $"Bem-vindo, {usuario.Nome}!", "OK");
-            await Navigation.PushAsync(new HomePage(_db, usuario));
+            var dbService = ServiceHelper.GetService<DatabaseService>();
+            await Navigation.PushAsync(new HomePage(dbService, usuario));
         }
         else
         {
@@ -28,6 +29,6 @@ public partial class Page_Login : ContentPage
 
     private async void OnCadastroClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new CadastroPage(_db));
+        await Navigation.PushAsync(ServiceHelper.GetService<CadastroPage>());
     }
 }
