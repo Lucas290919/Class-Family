@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite;
+﻿using SQLite;
 
 namespace Class_Family.Models
 {
@@ -13,6 +8,10 @@ namespace Class_Family.Models
         public int Id { get; set; }
 
         [Indexed]
-        public int UsuarioId { get; set; } // FK -> Usuario
+        public int UsuarioId { get; set; }
+
+        public string NomeAluno { get; set; }
+        public string Telefone { get; set; }
     }
 }
+

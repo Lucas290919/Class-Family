@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Class_Family.Views.BoletimPage"
+             Title="BoletimPage">
+    <VerticalStackLayout Padding="20" Spacing="10">
+        <Label Text="Notas lançadas" FontSize="18" FontAttributes="Bold" />
+        <CollectionView x:Name="boletimList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="5" Padding="10">
+                        <StackLayout>
+                            <Label Text="{Binding DisciplinaId}" />
+                            <Label Text="{Binding Nota}" FontAttributes="Bold" />
+                            <Label Text="{Binding Observacao}" FontSize="10" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

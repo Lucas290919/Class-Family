@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite;
+﻿using SQLite;
 
 namespace Class_Family.Models
 {
@@ -11,13 +6,10 @@ namespace Class_Family.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
         [Indexed]
-        public int UsuarioId { get; set; } // FK -> Usuario
-
+        public int UsuarioId { get; set; }
         public string Matricula { get; set; }
-
         [Indexed]
-        public int TurmaId { get; set; } // FK -> Turma
+        public int TurmaId { get; set; } 
     }
 }

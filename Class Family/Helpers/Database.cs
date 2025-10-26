@@ -1,113 +1,95 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite;
+﻿using SQLite;
 using Class_Family.Models;
 
-namespace Class_Family.SQLite
+namespace Class_Family.Helpers
 {
-    public class Database
+    public class DatabaseService
     {
-        readonly SQLiteAsyncConnection _db;
-        public Database(string path)
-        {
-            _db.CreateTableAsync<Usuario>().Wait();
-            _db.CreateTableAsync<Professor>().Wait();
-            _db.CreateTableAsync<Aluno>().Wait();
-            _db.CreateTableAsync<Responsavel>().Wait();
-            _db.CreateTableAsync<Turma>().Wait();
-            _db.CreateTableAsync<Disciplina>().Wait();
-            _db.CreateTableAsync<Boletim>().Wait();
-            _db.CreateTableAsync<Frequencia>().Wait();
-            _db.CreateTableAsync<Comunicado>().Wait();
-            _db.CreateTableAsync<Agenda>().Wait();
+        private readonly SQLiteAsyncConnection _database;
 
-            CriarDadosTeste().Wait();
+        public DatabaseService(string dbPath)
+        {
+            _database = new SQLiteAsyncConnection(dbPath);
+
+            _database.CreateTableAsync<Usuario>().Wait();
+            _database.CreateTableAsync<Aluno>().Wait();
+            _database.CreateTableAsync<Professor>().Wait();
+            _database.CreateTableAsync<Responsavel>().Wait();
+            _database.CreateTableAsync<Disciplina>().Wait();
+            _database.CreateTableAsync<Boletim>().Wait();
+            _database.CreateTableAsync<Comunicado>().Wait();
+            _database.CreateTableAsync<Agenda>().Wait();
+            _database.CreateTableAsync<Frequencia>().Wait();
         }
 
-        // Inserir ou atualizar
-        public async Task<int> Salvar<T>(T entity) where T : new()
+        public async Task SalvarUsuario(Usuario usuario)
         {
-            if (await _db.UpdateAsync(entity) == 0)
-            {
-                return await _db.InsertAsync(entity);
-            }
-            return 1;
+            if (usuario.Id == 0)
+                await _database.InsertAsync(usuario);
+            else
+                await _database.UpdateAsync(usuario);
         }
 
-        // Listar todos
-        public Task<List<T>> Listar<T>() where T : new()
+        public async Task SalvarAluno(Aluno aluno)
         {
-            return _db.Table<T>().ToListAsync();
+            if (aluno.Id == 0)
+                await _database.InsertAsync(aluno);
+            else
+                await _database.UpdateAsync(aluno);
         }
 
-        // Buscar por ID
-        public Task<T> BuscarPorId<T>(object id) where T : new()
+        public async Task SalvarProfessor(Professor professor)
         {
-            return _db.FindAsync<T>(id);
+            if (professor.Id == 0)
+                await _database.InsertAsync(professor);
+            else
+                await _database.UpdateAsync(professor);
         }
 
-        // Deletar
-        public Task<int> Deletar<T>(T entity) where T : new()
+        public async Task SalvarResponsavel(Responsavel responsavel)
         {
-            return _db.DeleteAsync(entity);
+            if (responsavel.Id == 0)
+                await _database.InsertAsync(responsavel);
+            else
+                await _database.UpdateAsync(responsavel);
         }
 
-        // Login de usuário
-        public Task<Usuario> Login(string email, string senha)
+        public async Task SalvarComunicado(Comunicado comunicado)
         {
-            return _db.Table<Usuario>()
-                      .Where(u => u.Email == email && u.Senha == senha)
-                      .FirstOrDefaultAsync();
+            if (comunicado.Id == 0)
+                await _database.InsertAsync(comunicado);
+            else
+                await _database.UpdateAsync(comunicado);
         }
 
-        // Buscar alunos por turma
-        public Task<List<Aluno>> ListarAlunosPorTurma(int turmaId)
+        public async Task SalvarAgenda(Agenda agenda)
         {
-            return _db.Table<Aluno>()
-                      .Where(a => a.TurmaId == turmaId)
-                      .ToListAsync();
+            if (agenda.Id == 0)
+                await _database.InsertAsync(agenda);
+            else
+                await _database.UpdateAsync(agenda);
         }
 
-        // Buscar boletim por aluno
-        public Task<List<Boletim>> BuscarBoletimDoAluno(int alunoId)
+        public Task<List<Usuario>> ListarUsuarios()
+            => _database.Table<Usuario>().ToListAsync();
+
+        public Task<List<Comunicado>> ListarComunicados()
+            => _database.Table<Comunicado>().OrderByDescending(c => c.DataEnvio).ToListAsync();
+
+        public Task<List<Agenda>> ListarEventos()
+            => _database.Table<Agenda>().OrderByDescending(a => a.Data).ToListAsync();
+
+        public Task<int> DeletarUsuario(Usuario usuario)
+            => _database.DeleteAsync(usuario);
+
+        public Task<int> DeletarComunicado(Comunicado comunicado)
+            => _database.DeleteAsync(comunicado);
+
+        public Task<int> DeletarEvento(Agenda agenda)
+            => _database.DeleteAsync(agenda);
+        public Task<List<Boletim>> ListarBoletins()
         {
-            return _db.Table<Boletim>()
-                      .Where(b => b.AlunoId == alunoId)
-                      .ToListAsync();
-        }
-
-        private async Task CriarDadosTeste()
-        {
-            var usuarios = await _db.Table<Usuario>().ToListAsync();
-
-            if (usuarios.Count == 0)
-            {
-                var aluno = new Usuario { Nome = "João Silva", Email = "joao@escola.com", Senha = "123", Tipo = "Aluno" };
-                var professor = new Usuario { Nome = "Maria Souza", Email = "maria@escola.com", Senha = "456", Tipo = "Professor" };
-                var responsavel = new Usuario { Nome = "Carlos Silva", Email = "carlos@escola.com", Senha = "789", Tipo = "Responsavel" };
-
-                await _db.InsertAsync(aluno);
-                await _db.InsertAsync(professor);
-                await _db.InsertAsync(responsavel);
-
-                var turma = new Turma { Nome = "3º Ano A", Serie = "3º Ensino Médio" };
-                await _db.InsertAsync(turma);
-
-                await _db.InsertAsync(new Aluno { UsuarioId = aluno.ID, Matricula = "2025A001", TurmaId = turma.Id });
-                await _db.InsertAsync(new Professor { UsuarioId = professor.ID, Disciplina = "Matemática" });
-                await _db.InsertAsync(new Responsavel { UsuarioId = responsavel.ID });
-
-                await _db.InsertAsync(new Comunicado
-                {
-                    Titulo = "Bem-vindos!",
-                    Mensagem = "Início do ano letivo!",
-                    Data = DateTime.Now,
-                    Remetente = "Secretaria"
-                });
-            }
+            return _database.Table<Boletim>().ToListAsync();
         }
     }
 }

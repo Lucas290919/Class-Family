@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Class_Family.Views.CadastroPage"
+             Title="CadastroPage">
+    <VerticalStackLayout Padding="30" Spacing="10">
+        <Entry x:Name="nomeEntry" Placeholder="Nome completo" />
+        <Entry x:Name="emailEntry" Placeholder="Email" />
+        <Entry x:Name="senhaEntry" Placeholder="Senha" IsPassword="True" />
+        <Picker x:Name="tipoPicker" Title="Tipo de Usuário">
+            <Picker.Items>
+                <x:String>Aluno</x:String>
+                <x:String>Professor</x:String>
+                <x:String>Responsável</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <Button Text="Salvar" Clicked="OnSalvarClicked" />
+    </VerticalStackLayout>
+</ContentPage>

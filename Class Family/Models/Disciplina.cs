@@ -10,7 +10,6 @@ namespace Class_Family.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
         public string Nome { get; set; }
 
         [Indexed]

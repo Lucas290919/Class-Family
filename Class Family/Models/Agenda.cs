@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite;
+﻿using SQLite;
 
 namespace Class_Family.Models
 {
@@ -11,11 +6,9 @@ namespace Class_Family.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
+        public int UsuarioId { get; set; }
         public string Evento { get; set; }
-
         public DateTime Data { get; set; }
-
-        public string Local { get; set; }
+        public string? Descricao { get; set; }
     }
 }

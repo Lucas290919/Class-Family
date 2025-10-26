@@ -10,7 +10,7 @@ namespace Class_Family.Models
     public class Usuario
     {
         [PrimaryKey, AutoIncrement]
-        public int ID { get; set; }  // Substitui ID
+        public int Id { get; set; } 
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Tipo { get; set; }    

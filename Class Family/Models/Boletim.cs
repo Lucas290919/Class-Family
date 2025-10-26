@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite;
+﻿using SQLite;
 
 namespace Class_Family.Models
 {
@@ -13,11 +8,13 @@ namespace Class_Family.Models
         public int Id { get; set; }
 
         [Indexed]
-        public int AlunoId { get; set; } // FK -> Aluno
+        public int AlunoId { get; set; } 
 
         [Indexed]
-        public int DisciplinaId { get; set; } // FK -> Disciplina
+        public int DisciplinaId { get; set; } 
 
         public double Nota { get; set; }
+        public string? Observacao { get; set; }
+        public DateTime DataLancamento { get; set; } = DateTime.UtcNow;
     }
 }
